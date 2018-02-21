@@ -1,0 +1,7 @@
+<?php
+/**
+ * Implements hook_uninstall().
+ */
+function form_status_module_uninstall() {
+   variable_del("form_status_formNameList");
+}

@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Implements hook_help().
+ */
+function status_module_help($path, $arg) {
+  switch ($path) {
+    case 'admin/status_module/config':
+      // Help text for the simple page registered for this path.
+      return t('Ayuda para el Módulo revisar el estatus del Módulo.');
+
+    case 'admin/status_module/config#rg_dev':
+      // Help text for the admin section, using the module name in the path.
+      return t("This is help text created in the page example's second case.");
+  }
+}
+
+
+function status_module_menu() {
+
+  $items = array();
+ 
+  $items['admin/status_module'] = array(
+        'title' => 'Configuracion de los Módulos a Revisar',
+        'description' => 'Configuracion: Módulos a Revisar',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('form_status_module_config'),
+        'access arguments' => array('access status module'),
+        'file' => 'form_status_module_config.inc',
+        'weight' => -5,
+  );
+
+  $items['admin/status_module/config'] = array(
+        'title' => 'Configuracion de los Módulos a Revisar',
+        'description' => 'Configuracion: Módulos a Revisar',
+        'page callback' => 'drupal_get_form', 
+        'page arguments' => array('form_status_module_config'),
+        'access arguments' => array('access status module'),
+        'file' => 'form_status_module_config.inc',
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'weight' => -10,
+  );
+
+  $items['admin/status_module/reporte'] = array(
+        'title' => 'Reporte de el Estado de los Módulos',
+        'description' => 'Reporte General del Estado de los Módulos',
+        'page callback' => 'form_status_module_reporte',
+        'access arguments' => array('access status module'),
+        'file' => 'form_status_module_reporte.inc',
+        'type' => MENU_LOCAL_TASK,
+        'weight' => -15,
+  );
+
+  $items['admin/status_module/email/config'] = array(
+        'title' => 'Configuracíon del Destinatario del Reporte',
+        'description' => 'Configuracíon del email a donde se envia el Reporte Generado',
+        'page callback' => 'drupal_get_form', 
+        'page arguments' => array('form_status_module_email_config'),
+        'access arguments' => array('access status module'),
+        'file' => 'form_status_module_email_config.inc',
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 1,
+  );
+
+
+  return $items;
+
+}
+
+function status_module_permission() {
+  return array(
+    'access status module' => array(
+      'title' => t('Acceso Estatus de los Módulos'),
+    )
+  );
+}
